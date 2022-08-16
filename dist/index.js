@@ -9680,14 +9680,14 @@ async function run() {
     let commitMessage = commit_message_template
       .replace("{source_ref}", source_ref)
       .replace("{target_branch}", target_branch);
-    const listBranches = await octokit.rest.repos.listBranches({
+    const { data } = await octokit.rest.repos.listBranches({
       owner: repo.owner,
       repo: repo.repo,
     });
 
-    console.log(listBranches);
+    console.log(data);
 
-    for (const currentBranch of listBranches) {
+    for (const currentBranch of data) {
       await octokit.rest.repos.merge({
         owner: repo.owner,
         repo: repo.repo,
