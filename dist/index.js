@@ -9702,7 +9702,6 @@ async function run() {
   }
 }
 
-// noinspection JSIgnoredPromiseFromCall
 run();
 
 })();
