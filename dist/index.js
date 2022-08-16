@@ -9699,6 +9699,28 @@ async function run() {
     }
   } catch (e) {
     core.setFailed(e.message);
+    sendNotificationSlack("#desarrollo", core.getInput("SLACK_WEBHOOK"));
+  }
+}
+
+async function sendNotificationSlack(channel, slackWedHook) {
+  try {
+    const payload = {
+      channel: channel,
+      username: "webhookbot",
+      text: "Esto se publica en #desarrollo y procede de un robot llamado webhookbot.",
+      icon_emoji: ":ghost:",
+    };
+
+    const rest = await fetch(slackWedHook, {
+      body: JSON.stringify(payload),
+    });
+    console.log(rest);
+    if (!res.ok) {
+      throw new Error(`Server error ${res.status}`);
+    }
+  } catch (error) {
+    core.setFailed(error.message);
   }
 }
 

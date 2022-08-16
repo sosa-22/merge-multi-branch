@@ -15,6 +15,9 @@ inputs:
     description: "Template to generate the commit message, see README.md for more info"
     required: false
     default: "Merged {source_ref} into {target_branch}."
+  slack_webhook:
+    description: "Webhook Slack send notification error "
+    required: true
 
 runs:
   using: "node12"
