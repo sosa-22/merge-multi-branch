@@ -12,10 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: ./
+      - uses: sosa-22/merge-multi-branch@main
         with:
           github_token: ${{ github.token }}
           source_ref: ${{ github.ref }}
-          target_branch: develop
           commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
 ```
