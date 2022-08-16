@@ -3,6 +3,7 @@ const github = require("@actions/github");
 const core = require("@actions/core");
 
 async function run() {
+  let branchActive = "";
   try {
     const token = core.getInput("github_token");
     const source_ref = core.getInput("source_ref");
@@ -19,6 +20,7 @@ async function run() {
     for (const currentBranch of data) {
       let splitBranch = currentBranch.name.split("-");
       if (splitBranch.pop() === "stable") {
+        branchActive = currentBranch.name;
         let commitMessage = commit_message_template
           .replace("{source_ref}", source_ref)
           .replace("{target_branch}", currentBranch.name);
@@ -34,24 +36,27 @@ async function run() {
     }
   } catch (e) {
     core.setFailed(e.message);
-    sendNotificationSlack("#desarrollo", core.getInput("SLACK_WEBHOOK"));
+    sendNotificationSlack(
+      "#desarrollo",
+      core.getInput("SLACK_WEBHOOK"),
+      branchActive
+    );
   }
 }
 
-async function sendNotificationSlack(channel, slackWedHook) {
+async function sendNotificationSlack(channel, slackWedHook, branchActive) {
   try {
     const payload = {
       channel: channel,
       username: "webhookbot",
-      text: "Esto se publica en #desarrollo y procede de un robot llamado webhookbot.",
+      text: `<@${core.getInput(
+        "slack_webhook_tag_user_id"
+      )}> Failed to merge your ${branchActive} branch from ${core.getInput(
+        "source_ref"
+      )}.`,
       icon_emoji: ":ghost:",
     };
-    console.log("Antes del APIIIII: ", slackWedHook);
     axios.post(slackWedHook, payload);
-    console.log(rest);
-    if (!res.ok) {
-      throw new Error(`Server error ${res.status}`);
-    }
   } catch (error) {
     core.setFailed(error.message);
   }
