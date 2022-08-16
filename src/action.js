@@ -19,16 +19,17 @@ async function run() {
       repo: repo.repo,
     });
 
-    console.log(data);
-
     for (const currentBranch of data) {
-      await octokit.rest.repos.merge({
-        owner: repo.owner,
-        repo: repo.repo,
-        base: currentBranch.name,
-        head: source_ref,
-        commit_message: commitMessage,
-      });
+      let splitBranch = currentBranch.name.split("-");
+      if (splitBranch.pop() === "stable") {
+        await octokit.rest.repos.merge({
+          owner: repo.owner,
+          repo: repo.repo,
+          base: currentBranch.name,
+          head: source_ref,
+          commit_message: commitMessage,
+        });
+      }
     }
   } catch (e) {
     core.setFailed(e.message);
