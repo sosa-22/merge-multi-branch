@@ -1,4 +1,4 @@
-import fetch from "node-fetch";
+const axios = require("axios").default;
 const github = require("@actions/github");
 const core = require("@actions/core");
 
@@ -47,10 +47,7 @@ async function sendNotificationSlack(channel, slackWedHook) {
       icon_emoji: ":ghost:",
     };
     console.log("Antes del APIIIII: ", slackWedHook);
-    const rest = await fetch(slackWedHook, {
-      method: "POST",
-      body: JSON.stringify(payload),
-    });
+    axios.post(slackWedHook, payload);
     console.log(rest);
     if (!res.ok) {
       throw new Error(`Server error ${res.status}`);
