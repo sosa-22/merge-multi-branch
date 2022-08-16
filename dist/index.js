@@ -16781,7 +16781,7 @@ async function sendNotificationSlack(channel, slackWedHook) {
       text: "Esto se publica en #desarrollo y procede de un robot llamado webhookbot.",
       icon_emoji: ":ghost:",
     };
-    console.log("Antes del APIIIII")
+    console.log("Antes del APIIIII: ", slackWedHook);
     const rest = await fetch(slackWedHook, {
       method: "POST",
       body: JSON.stringify(payload),
