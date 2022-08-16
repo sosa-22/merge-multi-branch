@@ -1,5 +1,5 @@
 # merge-multi-branch
-
+```
 name: Test
 
 on:
@@ -18,3 +18,4 @@ jobs:
           source_ref: ${{ github.ref }}
           target_branch: develop
           commit_message_template: '[Automated] Merged {source_ref} into target {target_branch}'
+```
