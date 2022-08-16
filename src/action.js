@@ -1,6 +1,6 @@
+import fetch from "node-fetch";
 const github = require("@actions/github");
 const core = require("@actions/core");
-const fetch = require("node-fetch");
 
 async function run() {
   try {
@@ -46,7 +46,6 @@ async function sendNotificationSlack(channel, slackWedHook) {
       text: "Esto se publica en #desarrollo y procede de un robot llamado webhookbot.",
       icon_emoji: ":ghost:",
     };
-
     const rest = await fetch(slackWedHook, {
       body: JSON.stringify(payload),
     });
